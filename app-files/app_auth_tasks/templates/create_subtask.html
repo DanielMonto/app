@@ -1,0 +1,29 @@
+{% extends 'layouts/base.html' %}
+{% block title %} crear subtarea{% endblock title %}
+{% block content %}
+    <main class="container ">
+        <div class="row">
+            <div class="col-md-4 offset-md-4 mt-5">
+                <form method="POST" action="{% url 'create_subtask' task.name task.id %}" class="card card-body ">
+                    {% csrf_token %}
+                    <h3 class="fw-bold text-success text-center">Crear Subtarea</h3>
+                    <h4>{{error}}</h4>
+                    <div class="mb-3">
+                        <label for="name">Nombre de tarea: </label>
+                        <input type="text" name="name" id="name" required placeholder="Escribe el nombre de tu subtarea" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="description">Descripcion: </label>
+                        <input type="text" name="description" id="description" placeholder="Descripcion" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="important">Importante: </label>
+                        <input type="checkbox" name="important" id="important">
+                    </div>
+                    <button class="btn btn-dark" type="submit">Crear Subtarea</button>
+                </form>
+                
+            </div>
+        </div>
+    </main>
+{% endblock %}

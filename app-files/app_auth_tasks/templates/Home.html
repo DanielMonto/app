@@ -1,0 +1,27 @@
+{% extends 'layouts/base.html' %}
+{% block title %} Principal{% endblock title %}
+{% block content %}
+<main class="container py-5">
+<section class="card card-body">
+    <h1 class="text-center">Django App</h1>
+    <p class="fw-bold">Hola <b>{{user.username}}</b>, este es un pequeño proyecto que al inicio estaba pensado solo para ser una api de tareas simple pero le termine añadiendo un chat publico a continuacion te mostrare la forma mas rapida de acceder a los beneficios mencionados totalmente gratis:</p>
+    <div class="text-center">
+        {% if not user.is_authenticated %}
+    <p class="fw-bold">Si es primera vez que entras veras las opciones de crear usuario:</p>
+    <a href="{% url 'reguis' %}" class="btn btn-primary mb-2">
+        Crear Usuario
+    </a><br>
+    <p class="fw-bold">Y las de continuar una secion que hayas cerrado antes, pero en cambio si ya te reguistrate y no cerraste secion te aperecera la opcion de ir a tareas o al chat:</p>
+    <a href="{% url 'confirm_user' %}" class="btn btn-primary mt-2">
+            Continuar Secion Cerrada
+    </a>
+    {% elif user.is_authenticated %}
+    <p class="fw-bold">Tareas:</p>
+    <a href="{% url 'tasks' %}"class="btn btn-primary mb-2">Tareas</a>
+    <p class="fw-bold">Chat:</p>
+    <a class="btn btn-primary mt-2" href="{% url 'blog' %}">Chat</a>
+    {% endif %}
+    </div>
+</section>
+</main>
+{% endblock %}

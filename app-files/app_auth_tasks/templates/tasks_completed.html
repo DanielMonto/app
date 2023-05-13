@@ -1,0 +1,32 @@
+{% extends 'layouts/base.html' %}
+{% block title %} tasks{% endblock title %}
+{% block content %} 
+
+
+<main class="col-md-6 offset-md-3 container row">
+    <h1 class="text-center py-3">TAREAS COMPLETADAS</h1>
+    <ul class="list-group mb-3">
+{% for task in tasks %}
+
+<div class="list-group-item">
+    <header class="d-flex justify-content-between">
+<h3 class="fw-bold text-success">{{task.name}}</h3>
+<h3>{{task.user}}</h3>
+    </header>
+<header class="d-flex justify-content-between">
+<h6>{{task.description}}</h6>
+{% if task.important == True %}
+<h4><b>IMPORTANTE</b></h4>
+{% endif %}
+<p>{{task.date_completed}}</p>
+</header>
+<form action="{% url 'task_del' task.name task.id %}" method="POST">
+    {% csrf_token %}
+    <button class="btn btn-dark" type="submit">Eliminar tarea</button>
+</form>
+
+</div>
+{% endfor %}
+</ul>
+</main>
+{% endblock %}

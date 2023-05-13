@@ -1,0 +1,46 @@
+{% extends 'layouts/base.html' %}
+{% block title %} Chat{% endblock title %}
+{% block style %}
+<style>
+</style>{% endblock style %}
+{% block content %}
+<main class="container py-5">
+<section class="card card-body text-center">
+    <h1 class="text-center">Chat</h1>
+    <div class="container row">
+        <h4 class="text-center">{{error}}</h4>
+    <ul class="list-group">
+        <h4 class="text-center fw-bold">{{error_user}}</h4>
+{% for Mensaje in mensajes %}
+            <div class="list-group-item">
+            <header class="d-flex justify-content-between">
+                <h3 class="fw-bold">{{Mensaje.user}}</h3>
+                <h5 class="fw-bold">{{Mensaje.fecha}}</h5>
+                </header>
+                <header class="d-flex justify-content-between">
+                    <p>{{Mensaje.Mensaje}}</p>
+                    {% if Mensaje.user == user %}
+                    <form action="{% url 'mensaje_del' Mensaje.Mensaje Mensaje.id %}" method="POST">
+                        {% csrf_token %}
+                        <button class="btn btn-dark" type="submit">Eliminar mensaje</button>
+                    </form>
+                    {% endif %}
+                </header>
+            </div>
+{% endfor %}
+    </ul>
+</div>
+</section>
+<div class="container text-center">
+    <h4 class="fw-bold">{{error_de_name}}</h4>
+    <form action="{% url 'blog' %}" class="card card-body mt-3" method="POST">
+        {% csrf_token %}
+        <label for="Mensaje">Mensaje nuevo: </label>
+        <div class="col-md-4 offset-md-4">
+            <input class="form-control mt-2 mb-2" placeholder="No pongas links o errores" type="text" id="Mensaje" required name="Mensaje" maxlength="1000">
+            <button type="submit" class="btn btn-dark">Añadir mensaje</button>
+        </div>
+    </form>
+</div>
+</main>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'layouts/base.html' %}
+{% block title %} Tarea Nueva {% endblock title %}
+{% block content %}
+
+<main class="container ">
+    <div class="row">
+        <div class="col-md-4 offset-md-4 mt-5">
+            <form method="POST" class="card card-body ">
+                
+                <h1 class="text-center">Crear Tarea</h1>
+                <h4>{{error}}</h4>
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="name">Nombre de tarea: </label>
+                    <input type="text" name="name" id="name" required placeholder="Escribe el nombre de tu tarea" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="description">Descripcion: </label>
+                    <input type="text" name="description" id="description" placeholder="Descripcion" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="important">Importante: </label>
+                    <input type="checkbox" name="important" id="important">
+                </div>
+                <button class="btn btn-dark" type="submit">Crear Tarea</button>
+            </form>
+        </div>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'layouts/base.html' %}
+{% block title %} Reguistrarse{% endblock title %}
+{% block content %}
+
+<main class="container ">
+    <div class="row">
+        <div class="col-md-4 offset-md-4 mt-5">
+            <form method="POST" class="card card-body ">
+                <h1 class="text-center">Reguistrate</h1>
+                <h4>{{error}}</h4>
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="username">Nombre de usuario: </label>
+                    <input type="text" name="username" id="username" required placeholder="Escribe tu nombre de usuario" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="password1">Contraseña: </label>
+                    <input type="password" name="password1" id="password1" required placeholder="contraseña" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="password2">Comprueba contraseña: </label>
+                    <input type="password" name="password2" id="password2" required placeholder="comprueba tu contraseña" class="form-control">
+                </div>
+                <button class="btn btn-dark" type="submit">Reguistrarse</button>
+            </form>
+        </div>
+    </div>
+</main>
+{% endblock %}

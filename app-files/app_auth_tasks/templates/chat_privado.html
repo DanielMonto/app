@@ -1,0 +1,59 @@
+{% extends 'layouts/base.html' %}
+{% block title %} Chat privado con {{talker}} {% endblock title %}
+{% block content %}
+<main class="container py-5">
+    <section class="card card-body text-center">
+        <div class="container row">
+            <h1 class="text-center text-dark">Tu eres: <b class="text-success bw-bold">{{talker}}</b> y este es el chat privado con <b class="bw-bold text-success">{{user.username}}</b></h1>
+            <h4 class="text-center">{{error}}</h4>
+        <ul class="list-group">
+    {% for mensaje in mensajes %}
+    <div class="list-group-item">
+                <header class="d-flex justify-content-between">
+                    <h3 class="fw-bold">{{mensaje.sender}}</h3>
+                    <h5 class="fw-bold">{{mensaje.fecha}}</h5>
+                    </header>
+                    <header class="d-flex justify-content-between">
+                        <p>{{mensaje.mensaje}}</p>
+                        {% if mensaje.sender == request.user %}
+                        <form action="{% url 'pm_del' mensaje.id mensaje.mensaje user %}" method="POST">
+                            {% csrf_token %}
+                            <button class="btn btn-dark" type="submit">Eliminar mensaje</button>
+                        </form>
+                        {% endif %}
+                    </header>
+                </div>
+    {% endfor %}
+    {% for mensaje in mensajes_2 %}
+    <div class="list-group-item">
+                <header class="d-flex justify-content-between">
+                    <h3 class="fw-bold">{{mensaje.sender}}</h3>
+                    <h5 class="fw-bold">{{mensaje.fecha}}</h5>
+                    </header>
+                    <header class="d-flex justify-content-between">
+                        <p>{{mensaje.mensaje}}</p>
+                        {% if mensaje.sender == request.user %}
+                        <form action="{% url 'pm_del' mensaje.id mensaje.mensaje user %}" method="POST">
+                            {% csrf_token %}
+                            <button class="btn btn-dark" type="submit">Eliminar mensaje</button>
+                        </form>
+                        {% endif %}
+                    </header>
+                </div>
+    {% endfor %}
+        </ul>
+    </div>
+    </section>
+    <div class="container text-center">
+        <h4 class="fw-bold">{{error_de_name}}</h4><h4 class="fw-bold">{{error}}</h4>
+        <form action="{% url 'private_chat' user.username talker %}" class="card card-body mt-3" method="POST">
+            {% csrf_token %}
+            <label for="Mensaje">Mensaje nuevo: </label>
+            <div class="col-md-4 offset-md-4">
+                <input class="form-control mt-2 mb-2" placeholder="No pongas links o errores" type="text" id="Mensaje" required name="mensaje" maxlength="1000">
+                <button type="submit" class="btn btn-dark">Añadir mensaje</button>
+            </div>
+        </form>
+    </div>
+    </main>
+{% endblock %}

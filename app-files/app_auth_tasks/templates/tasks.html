@@ -1,0 +1,40 @@
+{% extends 'layouts/base.html' %}
+{% block title %} tasks{% endblock title %}
+{% block style %}
+<style>
+    .div1{
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin: center center;
+    }
+</style>
+{% endblock style %}
+{% block content %} 
+<div class="text-center div1" id="div1">
+<main class=" row text-center card card-body">
+<h1 class="text-center py-3 ">TAREAS PENDIENTES</h1>
+<ul class="list-group">
+{% for task in tasks %}
+    
+        <a class="list-group-item" href="{% url 'task_d' task.name task.id %}">
+            <div>
+            <header class="d-flex justify-content-between">
+                <h3 class="fw-bold">{{task.name}}</h3>
+                
+                <h4>{{task.user}}</h4>
+                </header>
+                <header class="d-flex justify-content-between">
+                    <p>{{task.description}}</p>
+                    {% if task.important == True %}
+                   <b>IMPORTANTE</b>
+                   {% endif %}
+                </header>
+            </div>
+        </a>
+{% endfor %}
+</ul>
+<a href="{% url 'create_task' %}" class="btn btn-dark mt-2  text-center">Crear Nueva Tarea</a>
+</main>
+</div>
+{% endblock %}

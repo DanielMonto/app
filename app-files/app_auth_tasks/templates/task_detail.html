@@ -1,0 +1,66 @@
+{% extends 'layouts/base.html' %}
+{% block title %} Task- {{task.name}}{% endblock title %}
+{% block content %}
+    <h1 class="fw-bold text-success text-center">{{task.name}}</h1>
+    
+<main class="container">
+    <div class="row">
+        <div class="col-md-4 offset-md-4 mt-5">
+            <form method="POST" class="card card-body ">
+    {% csrf_token %}
+    <label for="name">Nombre de tarea: </label>
+    <input class="form-control" type="text" name="name" id="name" value="{{task.name}}">
+    <label for="description">Descripcion: </label>
+    <input class="form-control" type="text" name="description" id="description" value="{{task.description}}">
+    <label  for="important">Importante: </label>
+    <input class="checkbox" type="checkbox" name="important" id="important">
+    <button class="btn btn-primary mt-3 mb-3" type="submit">Editar Tarea</button>
+    <ul class="list-group text-center">
+            </form>
+            <form method="POST" class="list-group-item" action="{% url 'task_c' task.name task.id %}" >
+                {% csrf_token %}
+                <button class="btn btn-secondary mb-3" type="submit">Completar Tarea</button>
+
+            </form>
+            <form class="list-group-item" action="{% url 'task_del' task.name task.id %}" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-dark" type="submit">Eliminar tarea</button>
+            </form>
+         </div>
+    </ul>
+    <div class="col-md-4 offset-md-4 container row">
+    
+        
+    </div>
+    <div class="container row">
+        <ul class="list-group">
+            <h1 class="fw-bold text-center mt-3 mb-3">Subtareas</h1>
+            
+        {% for sub_task in sub_tasks %}
+        <a class="list-group-item" href="{% url 'subtask_d' sub_task.name sub_task.id %}">
+        <div>
+            <header class="d-flex justify-content-between">
+                <h3 class="fw-bold">{{sub_task.name}}</h3>
+                <h6>{{sub_task.created_at}}</h6>
+                <h4>{{sub_task.user}}</h4>
+                </header>
+                <header class="d-flex justify-content-between">
+                    <p>{{sub_task.description}}</p>
+                    <form action="{% url 'subtask_del' sub_task.name sub_task.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-dark">Eliminar subtarea</button>
+                    </form>
+                    {% if sub_task.important == True %}
+                   <b>IMPORTANTE</b>
+                   {% endif %}
+                </header>
+            </div>
+        </a>
+        {% endfor %}
+        <a class="btn btn-dark mb-5" href="{% url 'create_subtask' task.name task.id %}" type="submit">Crear Subtarea</a>
+    </ul>
+    </div>
+    </div>
+</main>
+
+{% endblock %}

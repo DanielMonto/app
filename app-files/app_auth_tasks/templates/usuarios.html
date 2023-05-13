@@ -1,0 +1,27 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Usuarios{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <ul class="list-group text-center">
+        <h1 class="text-center bw-bold mt-2 mb-2">USUARIOS</h1>
+        {% for user_ in users %}
+        {% if user_ != request.user %}
+        <div class="border-3 mb-3">
+          <div>
+            <a href="{% url 'private_chat' user_ user.username  %}" class="bg-dark list-group-item btn-block">
+              <h3 class="fw-bold text-white ">Chatear con: <b class="text-success">{{user_.username}}</b>,click</h3>
+            </a>
+          </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+        
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

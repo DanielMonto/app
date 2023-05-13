@@ -1,0 +1,26 @@
+{% extends 'layouts/base.html' %}
+{% block title %} {{subtask.name}}{% endblock title %}
+{% block content %}
+<div class="container">
+<h1 class="text-center text-success">{{subtask.name}}</h1>
+{{error}}
+<div class="row col-md-4 offset-md-4 mt-5">
+<form class="card card-body" method="POST">
+    {% csrf_token %}
+    <label for="name">Nombre de tarea: </label>
+    <input class="form-control" type="text" name="name" id="name" value="{{subtask.name}}">
+    <label for="description">Descripcion: </label>
+    <input class="form-control" type="text" name="description" id="description" value="{{subtask.description}}">
+    <label  for="important">Importante: </label>
+    <input class="checkbox" type="checkbox" name="important" id="important">
+    <button class="btn btn-dark mt-2" type="submit">Editar subtarea</button>
+</form>
+</div>
+<div class="container col-md-4 offset-md-4 mt-2">
+    <form class="card card-body" action="{% url 'subtask_del' subtask.name subtask.id %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-dark">Eliminar subtarea</button>
+    </form>
+</div>
+</div>
+{% endblock %}
